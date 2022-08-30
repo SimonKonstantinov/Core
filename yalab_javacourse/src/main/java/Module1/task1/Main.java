@@ -1,22 +1,27 @@
 package Module1.task1;
 
+import java.awt.*;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
-    private static long randMax = 4294967296l;
-    private static long state = 0;
-    private static int X = 10;
-    private static int Y = 10;
+
+    private static int X = 5;
+    private static int Y = 5;
     private static String ANSI_RESET = "\u001B[0m";
+    private static int[][] arr = new int[X][Y];
 
     public static void main(String[] args) {
 
-        int[][] arr = new int[X][Y];
+        System.out.println("двигайте мышку");
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = rand();
+                System.out.print(  arr[i][j]  + " ");
+
             }
         }
+        System.out.println();
         for (int[] anArr : arr) {
             for (int anAnArr : anArr) {
                 if (anAnArr > 0) {
@@ -33,17 +38,24 @@ public class Main {
     }
 
     private static int arg(int[][] arr) {
-      return Arrays.stream(arr)
+        return Arrays.stream(arr)
                 .flatMapToInt(Arrays::stream)
-                .sum()/ arr.length;
+                .sum() / arr.length;
     }
 
     public static int rand() {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        PointerInfo a = MouseInfo.getPointerInfo();
+        Point b = a.getLocation();
+        int x = (int) b.getX();
+        int y = (int) b.getY();
+        int position = x + y;
 
-        state = 214 * state + 25;
-        state ^= state >> 15;
-        return (int) (state % randMax);
-
+        return position;
     }
 
     public static int min(int[][] arr) {
