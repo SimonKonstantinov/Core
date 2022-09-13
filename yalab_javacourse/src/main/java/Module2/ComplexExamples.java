@@ -139,23 +139,21 @@ public class ComplexExamples {
 
             [3, 4, 2, 7], 10 -> [3, 7] - вывести пару менно в скобках, которые дают сумму - 10
          */
-        Set<Integer> set = new HashSet();
-        int result = 10;
-        int[] array = new int[]{5,0,5, 4, 2, 7, 9};
-        Arrays.sort(array);
+  int result = 10;
+        int[] array = new int[]{3, 0, 5, 4, 2, 7, 9};
         for (int i = 0; i < array.length; i++) {
-            if(!set.contains(array[i])) {
-                set.add(array[i]);
+
 
                 int key = result - array[i];
                 int[] subarray = IntStream.range(i + 1, array.length)
                         .map(j -> array[j])
                         .toArray();
+                Arrays.sort(subarray);
                 int position = Arrays.binarySearch(subarray, key);
                 if (position >= 0) {
                     System.out.println("(" + array[i] + ", " + subarray[position] + ")");
                     break;
-                }
+
             }
 
         }
