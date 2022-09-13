@@ -122,15 +122,16 @@ public class ComplexExamples {
         for (Person person : RAW_DATA) {
             mapPersons.put(person.id, person.name);
         }
-        List<String> list = new ArrayList<String>(mapPersons.values());
-        list.stream()
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+      List<String> list = new ArrayList<String>(mapPersons.values());
+        List<Map.Entry<String, Long>> persons  = list.stream()
+                .collect(groupingBy(identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
-                .filter(element -> element.getValue() > 0)
-                .collect(Collectors.toList())
-                .forEach(entry -> System.out.println("Key: "+
+                .filter( element -> Objects.nonNull(element))
+                .collect(Collectors.toList());
+       persons.forEach(entry -> System.out.println("Key: " +
                         entry.getKey() + "\nValue:" + entry.getValue()));
+
 
 
         /*
